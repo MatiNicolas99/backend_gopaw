@@ -129,6 +129,22 @@ const verificarCredenciales = async (email, password) => {
     throw { code: 401, message: "Email o contraseña incorrecta" };
 };
 
+const delAppointmentById = async (id) => {
+  const consulta = "DELETE FROM appointment WHERE id = $1";
+  const values = [id];
+  const { rowCount } = await pool.query(consulta, values);
+  if (!rowCount)
+    throw { code: 404, message: "No se encontró ningúna cita con este ID" };
+};
+
+const delReviewById = async (id) => {
+  const consulta = "DELETE FROM review WHERE id = $1";
+  const values = [id];
+  const { rowCount } = await pool.query(consulta, values);
+  if (!rowCount)
+    throw { code: 404, message: "No se encontró ningún review con este ID" };
+};
+
 module.exports = {
   getVeterinarys,
   getReviews,
@@ -137,10 +153,15 @@ module.exports = {
   getVeterinaryById,
   getPetAppointments,
   getVeterinaryAppointments,
+  // 
   verificarCredenciales,
+  // 
   registrarUsuario,
   registrarVet,
   registrarReviewConToken,
   registrarPetConToken,
   registrarAppointment,
+  // 
+  delAppointmentById,
+  delReviewById
 };

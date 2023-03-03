@@ -5,13 +5,18 @@ const {
   getVeterinaryById,
   getPetAppointments,
   getVeterinaryAppointments,
+  getIdUsuarioPorEmail,
+  // 
   verificarCredenciales,
+  // 
   registrarVet,
   registrarUsuario,
-  getIdUsuarioPorEmail,
   registrarReviewConToken,
   registrarPetConToken,
   registrarAppointment,
+  // 
+  delAppointmentById,
+  delReviewById
 } = require("../models/appmodel");
 const jwt = require("jsonwebtoken");
 
@@ -157,6 +162,33 @@ const nuevoAppointment = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+const appDelAppointmentById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await delAppointmentById(id);
+    res.send("Appointment eliminado con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appDelReviewById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await delReviewById(id);
+    res.send("Review eliminado con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
 module.exports = {
   appGetVeterinarys,
   appGetReviews,
@@ -165,9 +197,13 @@ module.exports = {
   appGetPetAppointments,
   appGetVeterinaryAppointments,
   appLogin,
+  // 
   nuevoUsuario,
   nuevoVet,
   nuevaReseña,
   nuevaMascota,
   nuevoAppointment,
+  // 
+  appDelAppointmentById,
+  appDelReviewById
 };

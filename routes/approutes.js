@@ -8,12 +8,17 @@ const {
   appGetVeterinaryById,
   appGetPetAppointments,
   appGetVeterinaryAppointments,
+  //
   nuevoUsuario,
   nuevoVet,
-  appLogin,
   nuevaReseña,
   nuevaMascota,
   nuevoAppointment,
+  //
+  appLogin,
+  // 
+  appDelAppointmentById,
+  appDelReviewById
 } = require("../controllers/appcontroller");
 
 //Incluir las rutas que correspondan
@@ -23,11 +28,16 @@ router.get("/owner/:id", appGetOwnerById);
 router.get("/veterinary/:id", appGetVeterinaryById);
 router.get("/petappointments/:id", appGetPetAppointments);
 router.get("/veterinaryappointments/:id", appGetVeterinaryAppointments);
+// 
 router.post("/login", appLogin);
 router.post("/registerowner", nuevoUsuario);
 router.post("/registervet", nuevoVet);
 router.post("/registerreview", nuevaReseña);
 router.post("/registerpet", nuevaMascota);
 router.post("/registerappointment", nuevoAppointment);
+// 
+router.delete("/deleteappointment/:id", appDelAppointmentById);
+router.delete("/deletereview/:id", appDelReviewById);
+
 
 module.exports = router;

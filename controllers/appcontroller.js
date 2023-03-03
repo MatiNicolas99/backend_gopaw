@@ -1,5 +1,8 @@
 const {
   getVeterinarys,
+  getReviews,
+  getOwnerById,
+  getVeterinaryById,
   verificarCredenciales,
   registrarVet,
   registrarUsuario,
@@ -11,6 +14,43 @@ const appGetVeterinarys = async (req, res) => {
   try {
     const owners = await getVeterinarys();
     res.json(owners);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appGetReviews = async (req, res) => {
+  try {
+    const reviews = await getReviews();
+    res.json(reviews);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appGetOwnerById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const { email } = jwt.decode(token);
+    const owner = await getOwnerById(id);
+    res.json(owner);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appGetVeterinaryById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const { email } = jwt.decode(token);
+    const veterinary = await getVeterinaryById(id);
+    res.json(veterinary);
   } catch (error) {
     res.status(error.code || 500).send(error);
   }
@@ -49,6 +89,9 @@ const nuevoVet = async (req, res) => {
 
 module.exports = {
   appGetVeterinarys,
+  appGetReviews,
+  appGetOwnerById,
+  appGetVeterinaryById,
   appLogin,
   nuevoUsuario,
   nuevoVet,

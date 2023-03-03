@@ -1,13 +1,17 @@
-
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const { appGetVeterinarys, appLogin } = require('../controllers/appcontroller');
-
+const {
+  appGet,
+  nuevoUsuario,
+  nuevoVetVeterinarys,
+  appLogin,
+} = require("../controllers/appcontroller");
 
 //Incluir las rutas que correspondan
-router.get("/veterinarys", appGetVeterinarys );
-router.post("/login", appLogin)
-
+router.get("/veterinarys", appGetVeterinarys);
+router.post("/registerowner", nuevoUsuario);
+router.post("/registervet", nuevoVet);
+router.post("/login", appLogin);
 
 module.exports = router;

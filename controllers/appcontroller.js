@@ -3,6 +3,10 @@ const {
   verificarCredenciales,
   registrarVet,
   registrarUsuario,
+  getIdUsuarioPorEmail,
+  registrarReviewConToken,
+  registrarPetConToken,
+  registrarAppointment,
 } = require("../models/appmodel");
 const jwt = require("jsonwebtoken");
 
@@ -47,9 +51,51 @@ const nuevoVet = async (req, res) => {
   }
 };
 
+const nuevaReseña = async (req, res) => {
+  try {
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const { email } = jwt.decode(token);
+    const idUsuario = await getIdUsuarioPorEmail(email);
+    const review = req.body;
+    await registrarReviewConToken(review, idUsuario);
+    res.send("Review registrado con éxito");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const nuevaMascota = async (req, res) => {
+  try {
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const { email } = jwt.decode(token);
+    const idUsuario = await getIdUsuarioPorEmail(email);
+    const pet = req.body;
+    await registrarPetConToken(pet, idUsuario);
+    res.send("Pet registrado con éxito");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const nuevoAppointment = async (req, res) => {
+  try {
+    const appointment = req.body;
+    await registrarAppointment(appointment);
+    res.send("Appointment registrado con éxito");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 module.exports = {
   appGetVeterinarys,
   appLogin,
   nuevoUsuario,
   nuevoVet,
+  nuevaReseña,
+  nuevaMascota,
+  nuevoAppointment,
 };

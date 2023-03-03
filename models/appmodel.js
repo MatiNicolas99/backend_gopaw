@@ -31,28 +31,30 @@ const getIdUsuarioPorEmail = async (email) => {
 const getOwnerById = async (id) => {
   const consulta = "SELECT * FROM owner where owner.id = $1";
   const values = [id];
-  const { rowCount } = await pool.query(consulta, values);
-  if (!rowCount)
-    throw { code: 404, message: "No se encontró ningún dueño con este ID" };
+  const { rows } = await pool.query(consulta, values);
+  return rows
 };
 
 const getVeterinaryById = async (id) => {
   const consulta = "SELECT * FROM veterinary where veterinary.id = $1";
   const values = [id];
-  const { rowCount } = await pool.query(consulta, values);
-  if (!rowCount)
-    throw {
-      code: 404,
-      message: "No se encontró ningún veterinario con este ID",
-    };
+  const { rows } = await pool.query(consulta, values);
+  return rows
 };
 
-// const getOwnerAppointments = async () => {
-//   const {
-//     rows: [appointments],
-//   } = await pool.query("SELECT * from appointment");
-//   return appointments;
-// };
+const getPetAppointments = async (id) => {
+  const consulta = "SELECT * FROM appointment where appointment.pet_id = $1";
+  const values = [id];
+  const { rows } = await pool.query(consulta, values);
+  return rows
+};
+
+const getVeterinaryAppointments = async (id) => {
+  const consulta = "SELECT * FROM appointment where appointment.veterinary_id = $1";
+  const values = [id];
+  const { rows } = await pool.query(consulta, values);
+  return rows
+};
 
 const registrarUsuario = async (owner) => {
   let { owner_name, phone, email, image, password } = owner;
@@ -133,7 +135,8 @@ module.exports = {
   getIdUsuarioPorEmail,
   getOwnerById,
   getVeterinaryById,
-  // getOwnerAppointments,
+  getPetAppointments,
+  getVeterinaryAppointments,
   verificarCredenciales,
   registrarUsuario,
   registrarVet,

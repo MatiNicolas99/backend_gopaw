@@ -3,6 +3,8 @@ const {
   getReviews,
   getOwnerById,
   getVeterinaryById,
+  getPetAppointments,
+  getVeterinaryAppointments,
   verificarCredenciales,
   registrarVet,
   registrarUsuario,
@@ -38,9 +40,9 @@ const appGetOwnerById = async (req, res) => {
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, "az_AZ");
-    const { email } = jwt.decode(token);
     const owner = await getOwnerById(id);
     res.json(owner);
+    console.log(owner)
   } catch (error) {
     res.status(error.code || 500).send(error);
   }
@@ -52,9 +54,34 @@ const appGetVeterinaryById = async (req, res) => {
     const Authorization = req.header("Authorization");
     const token = Authorization.split("Bearer ")[1];
     jwt.verify(token, "az_AZ");
-    const { email } = jwt.decode(token);
     const veterinary = await getVeterinaryById(id);
     res.json(veterinary);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appGetPetAppointments = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const petAppointments = await getPetAppointments(id);
+    res.json(petAppointments);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appGetVeterinaryAppointments = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const veterinaryAppointments = await getVeterinaryAppointments(id);
+    res.json(veterinaryAppointments);
   } catch (error) {
     res.status(error.code || 500).send(error);
   }
@@ -135,6 +162,8 @@ module.exports = {
   appGetReviews,
   appGetOwnerById,
   appGetVeterinaryById,
+  appGetPetAppointments,
+  appGetVeterinaryAppointments,
   appLogin,
   nuevoUsuario,
   nuevoVet,

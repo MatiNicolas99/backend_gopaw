@@ -1,14 +1,18 @@
-const {} = require("../models/appmodel");
+const {getOwners} = require("../models/appmodel");
 
 // Actualizar según lo que corresp
 const appGet = async (req, res) => {
   try {
-    res.json("Probando sistema");
-  } catch (err) {
-    console.error(err);
-    res.send(err.message);
+    const owners = await getOwners();
+    res.json(owners);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
   }
 };
+
+
+
+
 
 module.exports = {
   appGet,

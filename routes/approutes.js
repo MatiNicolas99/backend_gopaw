@@ -6,7 +6,7 @@ const { appGet } = require('../controllers/appcontroller');
 
 
 //Incluir las rutas que correspondan
-router.get("/", appGet );
+router.get("/owners", appGet );
 
 
 module.exports = router;

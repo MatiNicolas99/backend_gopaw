@@ -24,6 +24,6 @@ router.post("/registerowner", nuevoUsuario);
 router.post("/registervet", nuevoVet);
 router.post("/registerreview", nuevaReseña);
 router.post("/registerpet", nuevaMascota);
-router.post("/registerappointment", nuevoAppointment)
+router.post("/registerappointment", nuevoAppointment);
 
 module.exports = router;

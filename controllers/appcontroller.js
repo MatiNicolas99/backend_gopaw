@@ -1,4 +1,4 @@
-const {getOwners} = require("../models/appmodel");
+const { getOwners, registrarVet, registrarUsuario } = require("../models/appmodel");
 
 // Actualizar según lo que corresp
 const appGet = async (req, res) => {
@@ -10,10 +10,28 @@ const appGet = async (req, res) => {
   }
 };
 
+const nuevoUsuario = async (req, res) => {
+  try {
+    const owner = req.body;
+    await registrarUsuario(owner);
+    res.send("Dueño registrado con éxito");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-
-
+const nuevoVet = async (req, res) => {
+  try {
+    const vet = req.body;
+    await registrarVet(vet);
+    res.send("Veterinario registrado con éxito");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 module.exports = {
   appGet,
+  nuevoUsuario,
+  nuevoVet,
 };

@@ -145,6 +145,41 @@ const delReviewById = async (id) => {
     throw { code: 404, message: "No se encontró ningún review con este ID" };
 };
 
+const editReview = async (id, date, title, content) => {
+  const consulta =
+    "UPDATE review SET date = $2, title = $3, content = $4 WHERE id = $1";
+  const values = [id, date, title, content];
+  await pool.query(consulta, values);
+};
+
+const editOwner = async (id, owner_name, phone, email, image) => {
+  const consulta =
+    "UPDATE owner SET owner_name = $2, phone = $3, email = $4, image = $5 WHERE id = $1";
+  const values = [id, owner_name, phone, email, image];
+  await pool.query(consulta, values);
+};
+
+const editVeterinary = async (id, veterinary_name, phone, email, image) => {
+  const consulta =
+    "UPDATE veterinary SET veterinary_name = $2, phone = $3, email = $4, image = $5 WHERE id = $1";
+  const values = [id, veterinary_name, phone, email, image];
+  await pool.query(consulta, values);
+};
+
+const editOwnerPassword = async (id, password) => {
+  const consulta = "UPDATE owner SET password = $2 WHERE id = $1";
+  const passwordEncriptada = bcrypt.hashSync(password);
+  const values = [id, passwordEncriptada];
+  await pool.query(consulta, values);
+};
+
+const editVeterinaryPassword = async (id, password) => {
+  const consulta = "UPDATE veterinary SET password = $2 WHERE id = $1";
+  const passwordEncriptada = bcrypt.hashSync(password);
+  const values = [id, passwordEncriptada];
+  await pool.query(consulta, values);
+};
+
 module.exports = {
   getVeterinarys,
   getReviews,
@@ -163,5 +198,11 @@ module.exports = {
   registrarAppointment,
   // 
   delAppointmentById,
-  delReviewById
+  delReviewById,
+  // 
+  editReview,
+  editOwner,
+  editVeterinary,
+  editOwnerPassword,
+  editVeterinaryPassword
 };

@@ -18,7 +18,13 @@ const {
   appLogin,
   // 
   appDelAppointmentById,
-  appDelReviewById
+  appDelReviewById,
+  // 
+  appPutReview,
+  appPutOwner,
+  appPutVeterinary,
+  appPutOwnerPassword,
+  appPutVeterinaryPassword
 } = require("../controllers/appcontroller");
 
 //Incluir las rutas que correspondan
@@ -38,6 +44,12 @@ router.post("/registerappointment", nuevoAppointment);
 // 
 router.delete("/deleteappointment/:id", appDelAppointmentById);
 router.delete("/deletereview/:id", appDelReviewById);
+// 
+router.put("/editreview/:id", appPutReview);
+router.put("/editowner/:id", appPutOwner);
+router.put("/editveterinary/:id", appPutVeterinary);
+router.put("/editownerpassword/:id", appPutOwnerPassword);
+router.put("/editveterinarypassword/:id", appPutVeterinaryPassword);
 
 
 module.exports = router;

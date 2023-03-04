@@ -16,7 +16,13 @@ const {
   registrarAppointment,
   // 
   delAppointmentById,
-  delReviewById
+  delReviewById,
+  // 
+  editReview,
+  editOwner,
+  editVeterinary,
+  editOwnerPassword,
+  editVeterinaryPassword
 } = require("../models/appmodel");
 const jwt = require("jsonwebtoken");
 
@@ -189,6 +195,71 @@ const appDelReviewById = async (req, res) => {
   }
 };
 
+const appPutReview = async (req, res) => {
+  try {
+    const { id, date, title, content } = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await editReview(id, date, title, content);
+    res.send("Review editado con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appPutOwner = async (req, res) => {
+  try {
+    const { id, owner_name, phone, email, image} = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await editOwner(id, owner_name, phone, email, image);
+    res.send("Dueño editado con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appPutVeterinary = async (req, res) => {
+  try {
+    const { id, veterinary_name, phone, email, image} = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await editVeterinary(id, veterinary_name, phone, email, image);
+    res.send("Veterinario editado con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appPutOwnerPassword = async (req, res) => {
+  try {
+    const { id, password} = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await editOwnerPassword(id, password);
+    res.send("Contraseña editada con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
+const appPutVeterinaryPassword = async (req, res) => {
+  try {
+    const { id, password} = req.body;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    await editVeterinaryPassword(id, password);
+    res.send("Contraseña editada con éxito");
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
+
 module.exports = {
   appGetVeterinarys,
   appGetReviews,
@@ -205,5 +276,11 @@ module.exports = {
   nuevoAppointment,
   // 
   appDelAppointmentById,
-  appDelReviewById
+  appDelReviewById,
+  // 
+  appPutReview,
+  appPutOwner,
+  appPutVeterinary,
+  appPutOwnerPassword,
+  appPutVeterinaryPassword
 };

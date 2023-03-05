@@ -27,6 +27,11 @@ class Server {
             console.log(`Servidor encendido en el puerto: ${this.port}`);
         });
     };
+
+    stop() {
+        this.app.close();
+    };
+    
 };
 
 

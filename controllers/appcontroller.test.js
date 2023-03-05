@@ -44,16 +44,31 @@ const {
         appPutOwnerPassword,
         appPutVeterinaryPassword} = require('./appcontroller')
 
+const waitForPort = require('wait-for-port');
 
+describe('my server', () => {
+  beforeAll(async () => {
+    await new Promise((resolve) => {
+       waitForPort('localhost', 8080, resolve);
+        });
+    });
+        
+  afterEach(() => {
+    jest.resetAllMocks();  
+  });
+    
+     
+        
+  
 jest.mock('./appcontroller.js');
 
     describe('appGetVeterinarys', () => {
-          test('should return an array of veterinarys', async () => {
+          test('should return an array of veterinarys', async () => {           
+            const getVeterinarys = jest.fn();
             const mockVeterinarys = [
-              { id: 1, veterinary_name: 'Veterinary 1', phone: '123-456-7890', email: 'veterinary1@example.com', image: 'image1.jpg' },
-              { id: 2, veterinary_name: 'Veterinary 2', phone: '234-567-8901', email: 'veterinary2@example.com', image: 'image2.jpg' },
-            ];
-            appGetVeterinarys.mockResolvedValue(mockVeterinarys);
+              { "email": "pedro@gmail.com", "id": 4, "image": null, "phone": "123412345", "veterinary_name": "pedro" },
+                ];
+           getVeterinarys.mockResolvedValue(mockVeterinarys);
             const req = {};
             const res = { json: jest.fn() };
             await appGetVeterinarys(req, res);
@@ -61,8 +76,9 @@ jest.mock('./appcontroller.js');
           });
         
           test('should return an error response if getVeterinarys throws an error', async () => {
-            const mockError = new Error('Something went wrong');
-            appGetVeterinarys.mockRejectedValue(mockError);
+            const getVeterinarys = jest.fn();            
+            const mockError = new Error({message:'Something went wrong'});
+           getVeterinarys.mockRejectedValue(mockError);
             const req = {};
             const res = { status: jest.fn().mockReturnThis(), send: jest.fn() };
             await appGetVeterinarys(req, res);
@@ -73,7 +89,7 @@ jest.mock('./appcontroller.js');
 
      describe('appGetReviews', () => {
             test('should return an array of reviews', async () => {
-              const mockReviews = [{ id: 1, rating: 4 }, { id: 2, rating: 5 }];
+              const mockReviews = [{"content": "se edita el review",  "date": 2023-12-31, "id": 1, "owner_id": 1, "title": "edicion de review", "veterinary_id": 1 }];
               jest.spyOn(global, 'fetch').mockResolvedValue({
                 json: jest.fn().mockResolvedValue(mockReviews),
               });
@@ -84,9 +100,10 @@ jest.mock('./appcontroller.js');
                 send: jest.fn(),
               };
               await appGetReviews(req, res);
-              expect(res.json).toHaveBeenCalledWith(mockReviews);
+              expect(res.json).toHaveBeenCalledWith({mockReviews});
             });
           });
+
 
      
 jest.mock('jsonwebtoken', () => ({
@@ -114,7 +131,7 @@ jest.mock('jsonwebtoken', () => ({
               await appDelAppointmentById(req, res);
           
               expect(mockDelAppointmentById).toHaveBeenCalledWith('123');
-              expect(res.send).toHaveBeenCalledWith('Appointment successfully deleted');
+              expect(res.send).toHaveBeenCalledWith('Appointment eliminado con éxito');
             });
           
             test('should handle errors', async () => {
@@ -147,10 +164,10 @@ jest.mock('jsonwebtoken', () => ({
               const mockDelReviewById = require('../config/appconfig.js').delReviewById;
               mockDelReviewById.mockResolvedValueOnce();
           
-              await appDelReviewById(req, res);
+              await appDelReviewById(req, res);              
           
               expect(mockDelReviewById).toHaveBeenCalledWith('456');
-              expect(res.send).toHaveBeenCalledWith('Review successfully deleted');
+              expect(res.send).toHaveBeenCalledWith('Review eliminado con éxito');
             });
           
             test('should handle errors', async () => {
@@ -169,5 +186,5 @@ jest.mock('jsonwebtoken', () => ({
               expect(res.send).toHaveBeenCalledWith({ code: 500 });
             });
           });
-          
+   })       
          

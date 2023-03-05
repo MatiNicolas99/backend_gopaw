@@ -45,6 +45,14 @@ const {
         appPutVeterinaryPassword} = require('./appcontroller')
 
 
+const waitForServer = require('./waitForServer');
+
+describe('my server', () => {
+  beforeAll(async () => {
+    await waitForServer(8080);
+  });
+
+
 jest.mock('./appcontroller.js');
 
     describe('appGetVeterinarys', () => {
@@ -87,6 +95,7 @@ jest.mock('./appcontroller.js');
               expect(res.json).toHaveBeenCalledWith(mockReviews);
             });
           });
+
 
      
 jest.mock('jsonwebtoken', () => ({
@@ -169,5 +178,5 @@ jest.mock('jsonwebtoken', () => ({
               expect(res.send).toHaveBeenCalledWith({ code: 500 });
             });
           });
-          
+   })       
          

@@ -32,7 +32,7 @@ const appGetVeterinarys = async (req, res) => {
     const owners = await getVeterinarys();
     res.json(owners);
   } catch (error) {
-    res.status(error.code || 500).send(error);
+    res.status(500).send({message: 'Something went wrong'});
   }
 };
 
@@ -178,7 +178,7 @@ const appDelAppointmentById = async (req, res) => {
     await delAppointmentById(id);
     res.send("Appointment eliminado con éxito");
   } catch (error) {
-    res.status(error.code || 500).send(error);
+    res.status(500).send(error);
   }
 };
 

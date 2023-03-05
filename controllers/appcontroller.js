@@ -39,7 +39,16 @@ const appGetVeterinarys = async (req, res) => {
 const appGetReviews = async (req, res) => {
   try {
     const reviews = await getReviews();
-    res.json(reviews);
+    const formatedData = reviews.map(item => ({
+      id: item.id,
+      date: item.date.toLocaleDateString("en-ES"),
+      title: item.title,
+      content: item.content,
+      owner_id: item.owner_id,
+      veterinary_id: item.veterinary_id
+    }));
+    console.log(formatedData)
+    res.json(formatedData);
   } catch (error) {
     res.status(error.code || 500).send(error);
   }

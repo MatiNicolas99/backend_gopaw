@@ -66,8 +66,28 @@ jest.mock('./appcontroller.js');
           test('should return an array of veterinarys', async () => {           
             const getVeterinarys = jest.fn();
             const mockVeterinarys = [
-              { "email": "pedro@gmail.com", "id": 4, "image": null, "phone": "123412345", "veterinary_name": "pedro" },
-                ];
+              {
+                "id": 4,
+                "veterinary_name": "pedro",
+                "phone": "123412345",
+                "email": "pedro@gmail.com",
+                "image": null
+              },             
+              {
+                "id": 6,
+                "veterinary_name": "pedro",
+                "phone": "123412345",
+                "email": "pedro@gmail.com",
+                "image": null
+              },
+              {
+                "id": 2,
+                "veterinary_name": "sanchoPanza",
+                "phone": "99988877744",
+                "email": "sancho@panza.com",
+                "image": null
+              },              
+            ];
            getVeterinarys.mockResolvedValue(mockVeterinarys);
             const req = {};
             const res = { json: jest.fn() };

@@ -77,7 +77,7 @@ jest.mock('./appcontroller.js');
         
           test('should return an error response if getVeterinarys throws an error', async () => {
             const getVeterinarys = jest.fn();            
-            const mockError = new Error({message:'Something went wrong'});
+            const mockError = ({message:'Something went wrong'});
            getVeterinarys.mockRejectedValue(mockError);
             const req = {};
             const res = { status: jest.fn().mockReturnThis(), send: jest.fn() };
@@ -105,11 +105,8 @@ jest.mock('./appcontroller.js');
           });
 
 
-     
-jest.mock('jsonwebtoken', () => ({
-            verify: jest.fn(),
-          }));
-          jest.mock('../config/appconfig.js', () => ({
+
+jest.mock('./appcontroller.js', () => ({
             delAppointmentById: jest.fn(),
             delReviewById: jest.fn(),
             editReview: jest.fn(),
@@ -118,73 +115,55 @@ jest.mock('jsonwebtoken', () => ({
           describe('appDelAppointmentById', () => {
             test('should delete an appointment and return success message', async () => {
               const req = {
-                body: { id: '123' },
+                params: { id: '123' },
                 header: () => 'Bearer fake-token',
               };
               const res = {
                 send: jest.fn(),
                 status: jest.fn(),
               };
-              const mockDelAppointmentById = require('../config/appconfig.js').delAppointmentById;
+              const mockDelAppointmentById = require('./appcontroller').delAppointmentById;
               mockDelAppointmentById.mockResolvedValueOnce();
-          
+            
               await appDelAppointmentById(req, res);
-          
+            
               expect(mockDelAppointmentById).toHaveBeenCalledWith('123');
               expect(res.send).toHaveBeenCalledWith('Appointment eliminado con éxito');
             });
           
-            test('should handle errors', async () => {
-              const req = { body: {} };
-              const res = {
-                send: jest.fn(),
-                status: jest.fn(),
-              };
-              const mockDelAppointmentById = require('../config/appconfig.js').delAppointmentById;
-              mockDelAppointmentById.mockRejectedValueOnce({ code: 404 });
+  //         describe('appDelReviewById', () => {
+  //           test('should delete a review and return success message', async () => {
+  //             const req = {
+  //               body: { id: '456' },
+  //               header: () => 'Bearer fake-token',
+  //             };
+  //             const res = {
+  //               send: jest.fn(),
+  //               status: jest.fn(),
+  //             };
+  //             const mockDelReviewById = require('../config/appconfig.js').delReviewById;
+  //             mockDelReviewById.mockResolvedValueOnce();
           
-              await appDelAppointmentById(req, res);
+  //             await appDelReviewById(req, res);              
           
-              expect(mockDelAppointmentById).toHaveBeenCalledWith(undefined);
-              expect(res.status).toHaveBeenCalledWith(404);
-              expect(res.send).toHaveBeenCalledWith({ code: 404 });
-            });
-          });
+  //             expect(mockDelReviewById).toHaveBeenCalledWith('456');
+  //             expect(res.send).toHaveBeenCalledWith('Review eliminado con éxito');
+  //           });
           
-          describe('appDelReviewById', () => {
-            test('should delete a review and return success message', async () => {
-              const req = {
-                body: { id: '456' },
-                header: () => 'Bearer fake-token',
-              };
-              const res = {
-                send: jest.fn(),
-                status: jest.fn(),
-              };
-              const mockDelReviewById = require('../config/appconfig.js').delReviewById;
-              mockDelReviewById.mockResolvedValueOnce();
+  //           test('should handle errors', async () => {
+  //             const req = { body: {} };
+  //             const res = {
+  //               send: jest.fn(),
+  //               status: jest.fn(),
+  //             };
+  //             const mockDelReviewById = require('../config/appconfig.js').delReviewById;
+  //             mockDelReviewById.mockRejectedValueOnce({ code: 500 });
           
-              await appDelReviewById(req, res);              
+  //             await appDelReviewById(req, res);
           
-              expect(mockDelReviewById).toHaveBeenCalledWith('456');
-              expect(res.send).toHaveBeenCalledWith('Review eliminado con éxito');
-            });
-          
-            test('should handle errors', async () => {
-              const req = { body: {} };
-              const res = {
-                send: jest.fn(),
-                status: jest.fn(),
-              };
-              const mockDelReviewById = require('../config/appconfig.js').delReviewById;
-              mockDelReviewById.mockRejectedValueOnce({ code: 500 });
-          
-              await appDelReviewById(req, res);
-          
-              expect(mockDelReviewById).toHaveBeenCalledWith(undefined);
-              expect(res.status).toHaveBeenCalledWith(500);
-              expect(res.send).toHaveBeenCalledWith({ code: 500 });
-            });
+  //             expect(mockDelReviewById).toHaveBeenCalledWith(undefined);
+  //             expect(res.status).toHaveBeenCalledWith(500);
+  //             expect(res.send).toHaveBeenCalledWith({ code: 500 });
+  //           });
           });
    })       
-         

@@ -44,7 +44,7 @@ const {
         appPutOwnerPassword,
         appPutVeterinaryPassword} = require('./appcontroller')
 
-        const waitForPort = require('wait-for-port');
+const waitForPort = require('wait-for-port');
 
 describe('my server', () => {
   beforeAll(async () => {
@@ -56,7 +56,7 @@ describe('my server', () => {
   afterEach(() => {
     jest.resetAllMocks();  
   });
-      
+    
      
         
   

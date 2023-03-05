@@ -2,27 +2,6 @@ const request = require('supertest');
 const app = require('../app');
 const jwt = require('jsonwebtoken');
 const pool = require("../config/appconfig");
-const {getVeterinarys,
-    getReviews,
-    getOwnerById,
-    getVeterinaryById,
-    getPetAppointments,
-    getVeterinaryAppointments,
-    getIdUsuarioPorEmail,  
-    verificarCredenciales,   
-    registrarVet,
-    registrarUsuario,
-    registrarReviewConToken,
-    registrarPetConToken,
-    registrarAppointment, 
-    delAppointmentById,
-    delReviewById,   
-    editReview,
-    editOwner,
-    editVeterinary,
-    editOwnerPassword,
-    editVeterinaryPasswords} = require('../models/appmodel')
-
 const {
         appGetVeterinarys,
         appGetReviews,
@@ -44,6 +23,8 @@ const {
         appPutOwnerPassword,
         appPutVeterinaryPassword} = require('./appcontroller')
 
+const { verificarCredenciales } = require('../models/appmodel');
+
 const waitForPort = require('wait-for-port');
 
 describe('my server', () => {
@@ -55,10 +36,8 @@ describe('my server', () => {
         
   afterEach(() => {
     jest.resetAllMocks();  
-  });
-    
-     
-        
+  });  
+             
   
 jest.mock('./appcontroller.js');
 
@@ -147,7 +126,46 @@ jest.mock('./appcontroller.js');
           });
         });
 
+// jest.mock('jsonwebtoken');
 
+// jest.mock('./appcontroller', () => ({
+//   appLogin: jest.fn(),
+// }));
+
+//     describe('appLogin', () => {
+//       const req = {
+//         "body": {
+//           "email": "julio@gmail.com", 
+//           "password": "clave123",}
+//       };
+
+//       test('Should return a token', async () => {
+//         const appLogin = jest.fn()
+        
+//         const tokenMock = 'tokenMock';
+//         const mockSign = jest.spyOn(jwt, 'sign').mockReturnValue(tokenMock);
+//         const mockSend = jest.fn();
+
+//         console.log(appLogin)
+
+//        appLogin.mockResolvedValue();
+
+//         const res = {
+//           send: mockSend,
+//         };
+
+//         await appLogin(req,res);
+
+//         expect(appLogin).toHaveBeenCalledWith(
+//           req.body.email,
+//           req.body.password,
+//           expect.any(Object)
+//         );
+        
+//         expect(mockSign).toHaveBeenCalledWith({email: req.body.email}, "az_AZ", {expiresIn: 1800 });
+//         expect(mockSend).toHaveBeenCalledWith(tokenMock);
+//       })
+//     })
 
 // jest.mock('./appcontroller.js', () => ({
 //             delAppointmentById: jest.fn(),

@@ -109,7 +109,22 @@ jest.mock('./appcontroller.js');
 
      describe('appGetReviews', () => {
             test('should return an array of reviews', async () => {
-              const mockReviews = [{"content": "se edita el review",  "date": 2023-12-31, "id": 1, "owner_id": 1, "title": "edicion de review", "veterinary_id": 1 }];
+              const mockReviews = [{
+                id: 3,
+                date: '12/30/2023',
+                title: 'review test',
+                content: 'asdasdasdasdassdasdasdasdasdasdasdas',
+                owner_id: 5,
+                veterinary_id: 6
+              },
+              {
+                id: 1,
+                date: '12/31/2023',
+                title: 'edicion de review',
+                content: 'se edita el review',
+                owner_id: 1,
+                veterinary_id: 2
+              }];
               jest.spyOn(global, 'fetch').mockResolvedValue({
                 json: jest.fn().mockResolvedValue(mockReviews),
               });
@@ -120,7 +135,7 @@ jest.mock('./appcontroller.js');
                 send: jest.fn(),
               };
               await appGetReviews(req, res);
-              expect(res.json).toHaveBeenCalledWith({mockReviews});
+              expect(res.json).toHaveBeenCalledWith(mockReviews);
             });
           });
 

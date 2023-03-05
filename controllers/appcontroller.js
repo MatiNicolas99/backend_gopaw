@@ -29,8 +29,8 @@ const jwt = require("jsonwebtoken");
 // Actualizar según lo que corresp
 const appGetVeterinarys = async (req, res) => {
   try {
-    const owners = await getVeterinarys();
-    res.json(owners);
+    const veterinarys = await getVeterinarys();
+    res.json(veterinarys);
   } catch (error) {
     res.status(error.code || 500).send(error);
   }

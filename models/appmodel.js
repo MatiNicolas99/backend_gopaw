@@ -5,19 +5,15 @@ const format = require("pg-format");
 //Funciones para interacturar con la BD
 
 const getVeterinarys = async () => {
-  const {
-    rows: [veterinarys],
-  } = await pool.query(
+  const {rows} = await pool.query(
     "SELECT veterinary.id, veterinary.veterinary_name, veterinary.phone, veterinary.email, veterinary.image from veterinary"
   );
-  return veterinarys;
+  return rows;
 };
 
 const getReviews = async () => {
-  const {
-    rows: [reviews],
-  } = await pool.query("SELECT * from review");
-  return reviews;
+  const {rows} = await pool.query("SELECT * from review");
+  return rows;
 };
 
 const getIdUsuarioPorEmail = async (email) => {

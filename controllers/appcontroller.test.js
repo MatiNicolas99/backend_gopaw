@@ -107,7 +107,7 @@ jest.mock('./appcontroller.js');
           });
         });
 
-        describe('appGetReviews', () => {
+    describe('appGetReviews', () => {
           test('should return an array of reviews', async () => {
             const mockReviews = [
               {

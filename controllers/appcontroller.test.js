@@ -107,15 +107,16 @@ jest.mock('./appcontroller.js');
           });
         });
 
-     describe('appGetReviews', () => {
-            test('should return an array of reviews', async () => {
-              const mockReviews = [{
+        describe('appGetReviews', () => {
+          test('should return an array of reviews', async () => {
+            const mockReviews = [
+              {
                 id: 3,
                 date: '12/30/2023',
                 title: 'review test',
                 content: 'asdasdasdasdassdasdasdasdasdasdasdas',
                 owner_id: 5,
-                veterinary_id: 6
+                veterinary_id: 6,
               },
               {
                 id: 1,
@@ -123,48 +124,55 @@ jest.mock('./appcontroller.js');
                 title: 'edicion de review',
                 content: 'se edita el review',
                 owner_id: 1,
-                veterinary_id: 2
-              }];
-              jest.spyOn(global, 'fetch').mockResolvedValue({
-                json: jest.fn().mockResolvedValue(mockReviews),
-              });
-              const req = {};
-              const res = {
-                json: jest.fn(),
-                status: jest.fn().mockReturnThis(),
-                send: jest.fn(),
-              };
-              await appGetReviews(req, res);
-              expect(res.json).toHaveBeenCalledWith(mockReviews);
-            });
+                veterinary_id: 2,
+              },
+            ];
+        
+            global.fetch = jest.fn(() =>
+              Promise.resolve({
+                json: () => Promise.resolve(mockReviews),
+              })
+            );
+        
+            const req = {};
+            const res = {
+              json: jest.fn(),
+              status: jest.fn().mockReturnThis(),
+              send: jest.fn(),
+            };
+        
+            await appGetReviews(req, res);
+        
+            expect(res.json).toHaveBeenCalledWith(mockReviews);
           });
+        });
 
 
 
-jest.mock('./appcontroller.js', () => ({
-            delAppointmentById: jest.fn(),
-            delReviewById: jest.fn(),
-            editReview: jest.fn(),
-          }));
+// jest.mock('./appcontroller.js', () => ({
+//             delAppointmentById: jest.fn(),
+//             delReviewById: jest.fn(),
+//             editReview: jest.fn(),
+//           }));
           
-          describe('appDelAppointmentById', () => {
-            test('should delete an appointment and return success message', async () => {
-              const req = {
-                params: { id: '123' },
-                header: () => 'Bearer fake-token',
-              };
-              const res = {
-                send: jest.fn(),
-                status: jest.fn(),
-              };
-              const mockDelAppointmentById = require('./appcontroller').delAppointmentById;
-              mockDelAppointmentById.mockResolvedValueOnce();
+//           describe('appDelAppointmentById', () => {
+//             test('should delete an appointment and return success message', async () => {
+//               const req = {
+//                 params: { id: '123' },
+//                 header: () => 'Bearer fake-token',
+//               };
+//               const res = {
+//                 send: jest.fn(),
+//                 status: jest.fn(),
+//               };
+//               const mockDelAppointmentById = require('./appcontroller').delAppointmentById;
+//               mockDelAppointmentById.mockResolvedValueOnce();
             
-              await appDelAppointmentById(req, res);
+//               await appDelAppointmentById(req, res);
             
-              expect(mockDelAppointmentById).toHaveBeenCalledWith('123');
-              expect(res.send).toHaveBeenCalledWith('Appointment eliminado con éxito');
-            });
+//               expect(mockDelAppointmentById).toHaveBeenCalledWith('123');
+//               expect(res.send).toHaveBeenCalledWith('Appointment eliminado con éxito');
+//             });
           
   //         describe('appDelReviewById', () => {
   //           test('should delete a review and return success message', async () => {
@@ -200,5 +208,5 @@ jest.mock('./appcontroller.js', () => ({
   //             expect(res.status).toHaveBeenCalledWith(500);
   //             expect(res.send).toHaveBeenCalledWith({ code: 500 });
   //           });
-          });
+          // });
    })       

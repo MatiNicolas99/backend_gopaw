@@ -5,14 +5,14 @@ const format = require("pg-format");
 //Funciones para interacturar con la BD
 
 const getVeterinarys = async () => {
-  const {rows} = await pool.query(
+  const { rows } = await pool.query(
     "SELECT veterinary.id, veterinary.veterinary_name, veterinary.phone, veterinary.email, veterinary.image from veterinary"
   );
   return rows;
 };
 
 const getReviews = async () => {
-  const {rows} = await pool.query("SELECT * from review");
+  const { rows } = await pool.query("SELECT * from review");
   return rows;
 };
 
@@ -28,28 +28,29 @@ const getOwnerById = async (id) => {
   const consulta = "SELECT * FROM owner where owner.id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
-  return rows
+  return rows;
 };
 
 const getVeterinaryById = async (id) => {
   const consulta = "SELECT * FROM veterinary where veterinary.id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
-  return rows
+  return rows;
 };
 
 const getPetAppointments = async (id) => {
   const consulta = "SELECT * FROM appointment where appointment.pet_id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
-  return rows
+  return rows;
 };
 
 const getVeterinaryAppointments = async (id) => {
-  const consulta = "SELECT * FROM appointment where appointment.veterinary_id = $1";
+  const consulta =
+    "SELECT * FROM appointment where appointment.veterinary_id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
-  return rows
+  return rows;
 };
 
 const registrarUsuario = async (owner) => {
@@ -110,15 +111,16 @@ const registrarPetConToken = async (pet, idUsuario) => {
 };
 
 const verificarCredenciales = async (email, password) => {
-  const consulta = "SELECT * FROM owner WHERE email = $1";
+  const consulta =
+`SELECT * FROM owner WHERE email = $1 UNION SELECT * FROM veterinary WHERE email = $1`;
   const values = [email];
 
   const {
-    rows: [owner],
+    rows: [data],
     rowCount,
   } = await pool.query(consulta, values);
 
-  const { password: passwordEncriptada } = owner;
+  const { password: passwordEncriptada } = data;
   const passwordEsCorrecta = bcrypt.compareSync(password, passwordEncriptada);
 
   if (!passwordEsCorrecta || !rowCount)
@@ -184,21 +186,21 @@ module.exports = {
   getVeterinaryById,
   getPetAppointments,
   getVeterinaryAppointments,
-  // 
+  //
   verificarCredenciales,
-  // 
+  //
   registrarUsuario,
   registrarVet,
   registrarReviewConToken,
   registrarPetConToken,
   registrarAppointment,
-  // 
+  //
   delAppointmentById,
   delReviewById,
-  // 
+  //
   editReview,
   editOwner,
   editVeterinary,
   editOwnerPassword,
-  editVeterinaryPassword
+  editVeterinaryPassword,
 };

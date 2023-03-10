@@ -123,8 +123,7 @@ const appLogin = async (req, res) => {
     const token = jwt.sign({ email }, "az_AZ", { expiresIn: 1800 });
     console.log(token);
     res.send(token);
-  } catch (error) {
-    console.log(error);
+  } catch (error) {    
     res.status(error.code || 500).send(error);
   }
 };

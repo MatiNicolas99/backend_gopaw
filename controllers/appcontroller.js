@@ -120,8 +120,7 @@ const appLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     await verificarCredenciales(email, password);
-    const token = jwt.sign({ email }, "az_AZ", { expiresIn: 1800 });
-    console.log(token);
+    const token = jwt.sign({ email }, "az_AZ", { expiresIn: 1800 });   
     res.send(token);
   } catch (error) {    
     res.status(error.code || 500).send(error);

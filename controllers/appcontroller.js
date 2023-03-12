@@ -80,16 +80,7 @@ const appGetVeterinaryById = async (req, res) => {
     res.status(error.code || 500).send(error);
   }
 };
-const appGetVetIdByEmail = async (req , res ) => {
-  try {
-    const { email } = req.body
-    const idUsuario = await getIdUsuarioPorEmail(email); 
-    res.json(idUsuario);
-    console.log(idUsuario);
-  } catch (error) {
-    res.status(error.code || 500).send(error);
-  }
-}
+
 const appGetPetAppointments = async (req, res) => {
   try {
     const { id } = req.body;
@@ -284,7 +275,7 @@ module.exports = {
   appGetPetAppointments,
   appGetVeterinaryAppointments,
   appLogin,
-  appGetVetIdByEmail,
+
   // 
   nuevoUsuario,
   nuevoVet,

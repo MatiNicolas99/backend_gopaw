@@ -56,13 +56,13 @@ const appGetReviews = async (req, res) => {
 
 const appGetOwnerById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const  {id}  = req.params;
+    // console.log(id)
     // const Authorization = req.header("Authorization");
     // const token = Authorization.split("Bearer ")[1];
     // jwt.verify(token, "az_AZ");
-    const owner = await getOwnerById(id);
-    res.json(owner);
-    console.log(owner)
+    const data = await getOwnerById(id);
+    res.json(data);
   } catch (error) {
     res.status(error.code || 500).send(error);
   }

@@ -21,5 +21,8 @@
     "pg-format": "^1.0.4",
     "supertest": "^6.3.3",
     "wait-for-port": "^0.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
   }
 }

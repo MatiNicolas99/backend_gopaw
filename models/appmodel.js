@@ -28,6 +28,7 @@ const getOwnerById = async (id) => {
   const consulta = "SELECT * FROM owner where owner.id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
+  // console.log(rows)
   return rows;
 };
 

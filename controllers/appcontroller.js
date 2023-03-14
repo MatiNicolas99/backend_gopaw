@@ -58,6 +58,9 @@ const appGetOwnerById = async (req, res) => {
   try {
     const  {id}  = req.params;
     // console.log(id)
+    // 
+    // 
+    // 
     // const Authorization = req.header("Authorization");
     // const token = Authorization.split("Bearer ")[1];
     // jwt.verify(token, "az_AZ");

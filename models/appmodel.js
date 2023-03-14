@@ -120,11 +120,15 @@ const verificarCredenciales = async (email, password) => {
     rowCount,
   } = await pool.query(consulta, values);
 
+
+
   const { password: passwordEncriptada } = data;
   const passwordEsCorrecta = bcrypt.compareSync(password, passwordEncriptada);
 
   if (!passwordEsCorrecta || !rowCount)
     throw { code: 401, message: "Email o contraseña incorrecta" };
+
+    return data;
 };
 
 const delAppointmentById = async (id) => {

@@ -57,9 +57,9 @@ const appGetReviews = async (req, res) => {
 const appGetOwnerById = async (req, res) => {
   try {
     const { id } = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     const owner = await getOwnerById(id);
     res.json(owner);
     console.log(owner)
@@ -70,10 +70,11 @@ const appGetOwnerById = async (req, res) => {
 
 const appGetVeterinaryById = async (req, res) => {
   try {
-    const { id } = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    const { id } = req.params;
+    console.log(id);
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     const veterinary = await getVeterinaryById(id);
     res.json(veterinary);
   } catch (error) {

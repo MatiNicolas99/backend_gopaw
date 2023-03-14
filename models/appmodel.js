@@ -54,20 +54,20 @@ const getVeterinaryAppointments = async (id) => {
 };
 
 const registrarUsuario = async (owner) => {
-  let { owner_name, phone, email, image, password } = owner;
+  let { owner_name, phone, email, image, password, account_type } = owner;
   const passwordEncriptada = bcrypt.hashSync(password);
-  const values = [owner_name, phone, email, image, passwordEncriptada];
-  const consulta = "INSERT INTO owner values (DEFAULT, $1, $2, $3, $4, $5)";
+  const values = [owner_name, phone, email, image, passwordEncriptada, account_type];
+  const consulta = "INSERT INTO owner values (DEFAULT, $1, $2, $3, $4, $5, $6)";
   await pool.query(consulta, values);
 };
 
 const registrarVet = async (vet) => {
-  let { veterinary_name, phone, email, password, image } = vet;
+  let { veterinary_name, phone, email, image, password, account_type } = vet;
   const passwordEncriptada = bcrypt.hashSync(password);
-  const values = [veterinary_name, phone, email, image, passwordEncriptada];
+  const values = [veterinary_name, phone, email, image, passwordEncriptada, account_type];
   console.log(values);
   const consulta =
-    "INSERT INTO veterinary values (DEFAULT, $1, $2, $3, $4, $5)";
+    "INSERT INTO veterinary values (DEFAULT, $1, $2, $3, $4, $5, $6)";
   await pool.query(consulta, values);
 };
 

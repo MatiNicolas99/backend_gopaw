@@ -39,6 +39,15 @@ const getVeterinaryById = async (id) => {
   return rows;
 };
 
+const getVeterinaryByName = async (vetName) => {
+  console.log(vetName)
+  const consulta = "SELECT * FROM veterinary where veterinary.veterinary_name = $1";
+  const values = [vetName];
+  const {rows} = await pool.query(consulta, values);
+  // console.log(rows)
+  return rows
+}
+
 const getPetAppointments = async (id) => {
   const consulta = "SELECT * FROM appointment where appointment.pet_id = $1";
   const values = [id];
@@ -104,9 +113,9 @@ const registrarReviewConToken = async (review, idUsuario) => {
   await pool.query(consulta, values);
 };
 
-const registrarPetConToken = async (pet, idUsuario) => {
-  let { pet_name, type, birth_date, idVet } = pet;
-  const values = [pet_name, type, birth_date, idUsuario.id, idVet];
+const registrarPet = async (pet) => {
+  let { pet_name, type, birth_date, owner_id, veterinary_id } = pet;
+  const values = [pet_name, type, birth_date, owner_id, veterinary_id];
   const consulta = "INSERT INTO pet values (DEFAULT, $1, $2, $3, $4, $5)";
   await pool.query(consulta, values);
 };
@@ -189,6 +198,7 @@ module.exports = {
   getIdUsuarioPorEmail,
   getOwnerById,
   getVeterinaryById,
+  getVeterinaryByName,
   getPetAppointments,
   getVeterinaryAppointments,
   //
@@ -197,7 +207,7 @@ module.exports = {
   registrarUsuario,
   registrarVet,
   registrarReviewConToken,
-  registrarPetConToken,
+  registrarPet,
   registrarAppointment,
   //
   delAppointmentById,

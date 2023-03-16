@@ -3,6 +3,7 @@ const {
   getReviews,
   getOwnerById,
   getVeterinaryById,
+  getVeterinaryByName,
   getPetAppointments,
   getVeterinaryAppointments,
   getIdUsuarioPorEmail,
@@ -12,7 +13,7 @@ const {
   registrarVet,
   registrarUsuario,
   registrarReviewConToken,
-  registrarPetConToken,
+  registrarPet,
   registrarAppointment,
   // 
   delAppointmentById,
@@ -84,6 +85,17 @@ const appGetVeterinaryById = async (req, res) => {
     res.status(error.code || 500).send(error);
   }
 };
+
+const appGetVeterinaryByName = async (req, res) => {
+  try{
+    const {veterinary_name}= req.body;
+    // console.log(veterinary_name)
+    const results = await getVeterinaryByName(veterinary_name)
+    res.json(results)
+  }catch(error){
+    res.status(error.code || 500).send(error);
+  }
+}
 
 const appGetPetAppointments = async (req, res) => {
   try {
@@ -159,13 +171,13 @@ const nuevaReseña = async (req, res) => {
 
 const nuevaMascota = async (req, res) => {
   try {
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
-    const { email } = jwt.decode(token);
-    const idUsuario = await getIdUsuarioPorEmail(email);
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
+    // const { email } = jwt.decode(token);
+    // const idUsuario = await getIdUsuarioPorEmail(email);
     const pet = req.body;
-    await registrarPetConToken(pet, idUsuario);
+    await registrarPet(pet);
     res.send("Pet registrado con éxito");
   } catch (error) {
     res.status(500).send(error);
@@ -278,6 +290,7 @@ module.exports = {
   appGetReviews,
   appGetOwnerById,
   appGetVeterinaryById,
+  appGetVeterinaryByName,
   appGetPetAppointments,
   appGetVeterinaryAppointments,
   appLogin,

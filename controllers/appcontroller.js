@@ -237,9 +237,9 @@ const appPutOwner = async (req, res) => {
 const appPutVeterinary = async (req, res) => {
   try {
     const { id, veterinary_name, phone, email, image} = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     await editVeterinary(id, veterinary_name, phone, email, image);
     res.send("Veterinario editado con éxito");
   } catch (error) {

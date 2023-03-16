@@ -106,6 +106,15 @@ const getVetByName = async (veterinary_name) => {
   return rows[0];
 };
 
+const getReview = async (id) => {
+  const consulta = "SELECT * FROM review WHERE veterinary_id = $1";
+  const values = [id];
+  const { rows } = await pool.query(consulta, values);
+  console.log(rows[0]);
+  return rows[0];
+};
+
+
 const registrarReviewConToken = async (review, idUsuario) => {
   let { date, title, content, idVet } = review;
   const values = [date, title, content, idUsuario.id, idVet];
@@ -201,6 +210,7 @@ module.exports = {
   getVeterinaryByName,
   getPetAppointments,
   getVeterinaryAppointments,
+  getReview,
   //
   verificarCredenciales,
   //

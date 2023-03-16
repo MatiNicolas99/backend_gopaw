@@ -7,6 +7,7 @@ const {
   getPetAppointments,
   getVeterinaryAppointments,
   getIdUsuarioPorEmail,
+  getReview,
   // 
   verificarCredenciales,
   // 
@@ -123,6 +124,18 @@ const appGetVeterinaryAppointments = async (req, res) => {
   }
 };
 
+const appGetReview = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const Authorization = req.header("Authorization");
+    const token = Authorization.split("Bearer ")[1];
+    jwt.verify(token, "az_AZ");
+    const vetReview = await getReview(id);
+    res.json(vetReview);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+};
 const nuevoUsuario = async (req, res) => {
   try {
     const owner = req.body;
@@ -294,6 +307,7 @@ module.exports = {
   appGetPetAppointments,
   appGetVeterinaryAppointments,
   appLogin,
+  appGetReview,
 
   // 
   nuevoUsuario,

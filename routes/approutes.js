@@ -7,6 +7,7 @@ const {
   appGetOwnerById,
   appGetVeterinaryById,
   appGetVeterinaryByName,
+  appGetPetById,
   appGetPetAppointments,
   appGetVeterinaryAppointments,
 
@@ -35,6 +36,8 @@ router.get("/reviews", appGetReviews);
 router.get("/owner/:id", appGetOwnerById);
 router.get("/veterinary/:id", appGetVeterinaryById);
 router.get("/petappointments/:id", appGetPetAppointments);
+
+router.get("/pet/:id", appGetPetById);
 router.get("/veterinaryappointments/:id", appGetVeterinaryAppointments);
 router.get("/veterinaryName", appGetVeterinaryByName);
 // 

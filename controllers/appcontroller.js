@@ -5,6 +5,7 @@ const {
   getVeterinaryById,
   getVeterinaryByName,
   getPetAppointments,
+  getPetById,
   getVeterinaryAppointments,
   getIdUsuarioPorEmail,
   // 
@@ -54,6 +55,23 @@ const appGetReviews = async (req, res) => {
     res.status(error.code || 500).send(error);
   }
 };
+
+const appGetPetById = async (req, res) => {
+  try {
+    const  {id}  = req.params;
+    // console.log(id)
+    // 
+    // 
+    // 
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
+    const data = await getPetById(id);
+    res.json(data);
+  } catch (error) {
+    res.status(error.code || 500).send(error);
+  }
+}
 
 const appGetOwnerById = async (req, res) => {
   try {
@@ -291,6 +309,7 @@ module.exports = {
   appGetOwnerById,
   appGetVeterinaryById,
   appGetVeterinaryByName,
+  appGetPetById,
   appGetPetAppointments,
   appGetVeterinaryAppointments,
   appLogin,

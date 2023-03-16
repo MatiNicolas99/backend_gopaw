@@ -24,6 +24,14 @@ const getIdUsuarioPorEmail = async (email) => {
   return rows[0];
 };
 
+const getPetById = async (id) => {
+  const consulta = "SELECT * FROM pet WHERE owner_id = $1";
+  const values = [id];
+  const { rows } = await pool.query(consulta, values);
+  console.log(rows);
+  return rows;
+}
+
 const getOwnerById = async (id) => {
   const consulta = "SELECT * FROM owner where owner.id = $1";
   const values = [id];
@@ -198,6 +206,7 @@ module.exports = {
   getIdUsuarioPorEmail,
   getOwnerById,
   getVeterinaryById,
+  getPetById,
   getVeterinaryByName,
   getPetAppointments,
   getVeterinaryAppointments,

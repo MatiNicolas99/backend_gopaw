@@ -10,6 +10,7 @@ const {
   appGetPetById,
   appGetPetAppointments,
   appGetVeterinaryAppointments,
+  appGetReview,
 
   //
   nuevoUsuario,
@@ -40,6 +41,7 @@ router.get("/petappointments/:id", appGetPetAppointments);
 router.get("/pet/:id", appGetPetById);
 router.get("/veterinaryappointments/:id", appGetVeterinaryAppointments);
 router.get("/veterinaryName", appGetVeterinaryByName);
+router.get("/review/:id", appGetReview);
 // 
 router.post("/login", appLogin);
 router.post("/registerowner", nuevoUsuario);

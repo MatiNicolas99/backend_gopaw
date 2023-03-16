@@ -263,9 +263,9 @@ const appPutOwnerPassword = async (req, res) => {
 const appPutVeterinaryPassword = async (req, res) => {
   try {
     const { id, password} = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     await editVeterinaryPassword(id, password);
     res.send("Contraseña editada con éxito");
   } catch (error) {

@@ -25,7 +25,7 @@ const getIdUsuarioPorEmail = async (email) => {
 };
 
 const getPetById = async (id) => {
-  const consulta = "SELECT pet.pet_name, pet.birth_date, pet.type, owner.owner_name, veterinary.veterinary_name FROM pet JOIN owner ON pet.owner_id = owner.id JOIN veterinary ON pet.veterinary_id = veterinary.id WHERE owner.id = $1";
+  const consulta = "SELECT pet.id pet.pet_name, pet.birth_date, pet.type, owner.owner_name, veterinary.veterinary_name, veterinary.veterinary_id FROM pet JOIN owner ON pet.owner_id = owner.id JOIN veterinary ON pet.veterinary_id = veterinary.id WHERE owner.id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
   console.log(rows);

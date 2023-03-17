@@ -158,7 +158,8 @@ const verificarCredenciales = async (email, password) => {
 };
 
 const delAppointmentById = async (id) => {
-  const consulta = "DELETE FROM appointment WHERE id = $1";
+  console.log(id);
+  const consulta = "DELETE FROM appointment WHERE pet_id = $1";
   const values = [id];
   const { rowCount } = await pool.query(consulta, values);
   if (!rowCount)

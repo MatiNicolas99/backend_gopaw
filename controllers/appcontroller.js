@@ -228,10 +228,8 @@ const nuevoAppointment = async (req, res) => {
 
 const appDelAppointmentById = async (req, res) => {
   try {
-    const { id } = req.body;
-    // const Authorization = req.header("Authorization");
-    // const token = Authorization.split("Bearer ")[1];
-    // jwt.verify(token, "az_AZ");
+    const { id } = req.params;
+    console.log(id);
     await delAppointmentById(id);
     res.send("Appointment eliminado con éxito");
   } catch (error) {

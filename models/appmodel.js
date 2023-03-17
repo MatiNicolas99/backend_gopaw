@@ -65,7 +65,7 @@ const getPetAppointments = async (id) => {
 
 const getVeterinaryAppointments = async (id) => {
   const consulta =
-    "SELECT * FROM appointment where appointment.veterinary_id = $1";
+    "SELECT * FROM appointment where veterinary_id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
   return rows;
@@ -118,8 +118,7 @@ const getReview = async (id) => {
   const consulta = "SELECT * FROM review WHERE veterinary_id = $1";
   const values = [id];
   const { rows } = await pool.query(consulta, values);
-  console.log(rows[0]);
-  return rows[0];
+  return rows;
 };
 
 

@@ -131,10 +131,10 @@ const appGetPetAppointments = async (req, res) => {
 
 const appGetVeterinaryAppointments = async (req, res) => {
   try {
-    const { id } = req.body;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    const { id } = req.params;
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     const veterinaryAppointments = await getVeterinaryAppointments(id);
     res.json(veterinaryAppointments);
   } catch (error) {
@@ -145,10 +145,11 @@ const appGetVeterinaryAppointments = async (req, res) => {
 const appGetReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
     const vetReview = await getReview(id);
+    console.log(vetReview)
     res.json(vetReview);
   } catch (error) {
     res.status(error.code || 500).send(error);

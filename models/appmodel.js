@@ -90,8 +90,8 @@ const registrarVet = async (vet) => {
 };
 
 const registrarAppointment = async (appointment) => {
-  let { date, petId, vetId } = appointment;
-  const values = [date, petId, vetId];
+  let { date, pet_id, veterinary_id } = appointment;
+  const values = [date, pet_id, veterinary_id];
   const consulta = "INSERT INTO appointment values (DEFAULT, $1, $2, $3)";
   await pool.query(consulta, values);
 };

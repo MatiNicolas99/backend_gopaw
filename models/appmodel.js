@@ -120,9 +120,9 @@ const getReview = async (id) => {
 };
 
 
-const registrarReviewConToken = async (review, idUsuario) => {
-  let { date, title, content, idVet } = review;
-  const values = [date, title, content, idUsuario.id, idVet];
+const registrarReview= async (review) => {
+  let { date, title, content, owner_id, veterinary_id } = review;
+  const values = [date, title, content, owner_id, veterinary_id];
   const consulta = "INSERT INTO review values (DEFAULT, $1, $2, $3, $4, $5)";
   await pool.query(consulta, values);
 };
@@ -222,7 +222,7 @@ module.exports = {
   //
   registrarUsuario,
   registrarVet,
-  registrarReviewConToken,
+  registrarReview,
   registrarPet,
   registrarAppointment,
   //

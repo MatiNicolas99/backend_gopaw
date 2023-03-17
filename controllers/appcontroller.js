@@ -14,7 +14,7 @@ const {
   // 
   registrarVet,
   registrarUsuario,
-  registrarReviewConToken,
+  registrarReview,
   registrarPet,
   registrarAppointment,
   // 
@@ -188,13 +188,13 @@ const nuevoVet = async (req, res) => {
 
 const nuevaReseña = async (req, res) => {
   try {
-    const Authorization = req.header("Authorization");
-    const token = Authorization.split("Bearer ")[1];
-    jwt.verify(token, "az_AZ");
-    const { email } = jwt.decode(token);
-    const idUsuario = await getIdUsuarioPorEmail(email);
+    // const Authorization = req.header("Authorization");
+    // const token = Authorization.split("Bearer ")[1];
+    // jwt.verify(token, "az_AZ");
+    // const { email } = jwt.decode(token);
+    // const idUsuario = await getIdUsuarioPorEmail(email);
     const review = req.body;
-    await registrarReviewConToken(review, idUsuario);
+    await registrarReview(review);
     res.send("Review registrado con éxito");
   } catch (error) {
     res.status(500).send(error);

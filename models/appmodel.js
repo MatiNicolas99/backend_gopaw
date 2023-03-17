@@ -65,9 +65,11 @@ const getPetAppointments = async (id) => {
 
 const getVeterinaryAppointments = async (id) => {
   const consulta =
-    "SELECT * FROM appointment where veterinary_id = $1";
-  const values = [id];
+    "SELECT * FROM appointment INNER JOIN pet ON appointment.pet_id = pet.id INNER JOIN owner ON pet.owner_id = owner.id WHERE appointment.veterinary_id = $1";
+    console.log(consulta);
+    const values = [id];
   const { rows } = await pool.query(consulta, values);
+  console.log(rows);
   return rows;
 };
 

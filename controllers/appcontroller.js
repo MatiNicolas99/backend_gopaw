@@ -50,7 +50,7 @@ const appGetReviews = async (req, res) => {
     //   owner_id: item.owner_id,
     //   veterinary_id: item.veterinary_id
     // }));
-    console.log(formatedData)
+    // console.log(formatedData)
     res.json(reviews);
   } catch (error) {
     res.status(error.code || 500).send(error);
